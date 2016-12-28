@@ -1,0 +1,75 @@
+import org.openhab.core.library.types.*
+
+
+var HSBType hsbValue
+var HSBType hsbValue2
+var String  redValue
+var String  greenValue
+var String  blueValue
+
+rule LGTV_WOL
+when 
+	Item LGTV_Power received command ON
+then
+    sendCommand( LGTV_WOL, ON) 
+end
+
+rule "Set Hue Livingroom Colors"
+when
+	Item hueLivMainController received update
+then
+//	gHuesLivColor.send(hueLivMainController.state as HSBType)
+end
+
+rule "Set RGB value"
+    when
+            Item ColLivMain changed
+    then
+            hsbValue = ColLivMain.state as HSBType
+			gHuesLivColor.send(hsbValue)
+/* 			gHuesLivColor.members.forEach( s |
+			if( s.state == ON ) {
+				sendCommand( s, hsbValue)
+				sendUpdate(s)
+			}
+			
+			)
+*/
+end
+
+rule "TestScene"
+when
+	Item TestScene received command
+then
+
+	if(TestScene.state == ON) {
+	    hsbValue = new HSBType("302,92,20")
+    	gHuesLivColor.send(hsbValue)
+    	LGTV_Power.sendCommand(ON)
+	} 
+	else if( TestScene.state == OFF ) {
+		gHuesLivToggle.sendCommand(OFF)
+		LGTV_Power.sendCommand(OFF)
+	} 
+    
+end
+
+
+
+/*
+import org.openhab.core.library.types.*
+import org.openhab.core.persistence.*
+import org.openhab.model.script.actions.*
+*/
+
+/*var Timer timer = null
+val resList = newArrayList("640/480", "320/240", "480/360")
+val urlList = newArrayList("http://www.fillmurray.com", "http://www.fillmurray.com/g",
+                 "http://www.placecage.com", "http://www.placecage.com/c", "http://www.placecage.com/g")
+val Random random = new Random()
+*/
+
+
+
+
+// vim: syntax=Xtend syntax=openhab

@@ -1,0 +1,53 @@
+Group gAll		"All"
+
+Group gRooms	"Rooms"				(gAll)
+Group gRoomsLiv	"Living Room"		(gRooms)
+
+Group gLights 	"Lights"			(gAll)
+Group gHues 	"Hues" 				(gLights) 
+Group gHuesLiv  "Hues Living Room" 	(gLights, gRoomLiv)
+
+
+//Group:Switch:OR(ON, OFF) gHuesLivToggle "Hues Living Switch"
+Group gHuesLivToggle "Hues Living Switch"
+Group gHuesLivDimmer "Hues Living Dimmer"
+Group gHuesLivColor "Hues Living Color"
+
+// virtual Controls for Hues
+Switch	hueLivMainToggle
+Dimmer  hueLivMainDimmer
+Color	hueLivMainColor
+Dimmer	hueLivMainColorTemp
+
+Switch 	hueLivMainControllerT { channel="hue:0210:1:HueLivingMaster:color" }
+Dimmer 	hueLivMainControllerD { channel="hue:0210:1:HueLivingMaster:color" }
+Color 	hueLivMainControllerC { channel="hue:0210:1:HueLivingMaster:color" }
+Dimmer 	hueLivMainControllerCT { channel="hue:0210:1:HueLivingMaster:color_temperature" }
+
+Color ColLivMain
+
+// Hues
+Switch	hueLivNToggle	 	(gHuesLiv, gHuesLivToggle)	{ channel="hue:0210:1:HueLivingN:color" }
+Dimmer  hueLivNDimmer		(gHuesLiv, gHuesLivDimmer)	{ channel="hue:0210:1:HueLivingN:color" } 
+Color 	hueLivNColor		(gHuesLiv, gHuesLivColor)	{ channel="hue:0210:1:HueLivingN:color" } 
+Dimmer 	hueLivNColorTemp	(gHuesLiv) 					{ channel="hue:0210:1:HueLivingN:color_temperature" } 
+
+Switch	hueLivSwToggle		(gHuesLiv, gHuesLivToggle)	{ channel="hue:0210:1:HueLivingSW:color" }
+Dimmer  hueLivSwDimmer		(gHuesLiv, gHuesLivDimmer)	{ channel="hue:0210:1:HueLivingSW:color" }
+Color 	hueLivSwColor		(gHuesLiv, gHuesLivColor)	{ channel="hue:0210:1:HueLivingSW:color" }
+Dimmer 	hueLivSwColorTemp	(gHuesLiv)					{ channel="hue:0210:1:HueLivingSW:color_temperature" }
+
+
+// LGTV	
+
+// PowerSwitch
+Switch LGTV_Power "LGTV Power" { channel="connectsdk:WebOSTV:192_168_11_72:power"}
+
+// Power on is not Supported, so we need to Wake on LAN with WOL Binding (See rule file)
+Switch LGTV_WOL   "Power WOL"  { wol="192.168.11.255#3c:cd:93:7b:bb:9e" }
+
+
+Switch TestScene
+
+// vim: syntax=Xtend syntax=openhab
+

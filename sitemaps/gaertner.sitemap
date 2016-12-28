@@ -1,0 +1,34 @@
+sitemap gaertner label="Main Menu"
+{
+	
+	Frame {
+		Switch item=gHuesLivToggle label="gSwitch" mappings=[ON="On",OFF="Off"]
+		Slider item=gHuesLivDimmer label="gDimmer"
+		Colorpicker item=gHuesLivColor label="gHuesLivColor"
+		Colorpicker item=ColLivMain label="ColLivMain"
+
+		// Bulb1
+		Switch 		item=		hueLivNToggle
+		Slider 		item=		hueLivNDimmer
+		Colorpicker item=		gHuesLiv
+		Slider 		item=		hueLivNColorTemp
+
+		// Bulb2
+		Switch 		item=		Light2_Toggle
+		Slider 		item=		Light2_Dimmer
+		Slider 		item=		Light2_ColorTemp
+	}
+	Frame {
+		Switch item=LGTV_Power
+		Switch item=TestScene label="TestScene" mappings=[ON="On",OFF="Off"]
+		
+	}
+	Frame {
+		Switch item=hueLivMainControllerT label="Switch" mappings=[ON="On",OFF="Off"]
+		Switch item=hueLivMainControllerT label="Switch"
+		Slider item=hueLivMainControllerD label="Slider"
+		Colorpicker item=hueLivMainControllerC label="Colorpicker"
+		
+	}
+}
+	// vim: syntax=Xtend syntax=openhab
