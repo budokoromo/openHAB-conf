@@ -1,5 +1,6 @@
 import org.openhab.core.library.types.*
-
+import java.util.ArrayList
+import java.util.List
 
 var HSBType hsbValue
 var HSBType hsbValue2
@@ -7,11 +8,163 @@ var String  redValue
 var String  greenValue
 var String  blueValue
 
-rule LGTV_WOL
-when 
-	Item LGTV_Power received command ON
+var HSBType hueColorTV
+var HSBType hueColorSTANDARD
+var HSBType hueColorGAME
+var HSBType hueColorCANDLE
+var	hueColorLIGHT = new HSBType("56,18,83")
+
+var Number testNumber = 12
+
+val List<String> yamahaInputType = newArrayList("AV1", "AV2", "AV3", "AV4", "AV5", "AV6", "AV7", "V-AUX", "AUDIO1", "AUDIO2", "AUDIO3", "AUDIO4", "iPod", "Napster", "NET RADIO", "MULTI CH", "PC", "PHONO", "TUNER", "USB")
+val List<String> yamahaSurrType = newArrayList(	"2ch Stereo", "7ch Stereo", "Hall in Munich", "The Bottom Line", "The Roxy Theatre", "Hall in Vienna", "Chamber", "Cellar Club", // MUSIC 
+												"Standard", "Spectacle", "Sci-Fi", "Adventure", "Drama", "Mono Movie", // MOVIE
+												"Sports", "Action Game", "Roleplaying Game", "Music Video",  // Entertainment
+												"Surround Decoder" )
+
+val String yInputDUNE = 	"AV2"
+val String yInputVUPLUS = 	"AV1"
+val String yInputPS4BLACK = "AV3"
+val String yInputPS4PRO = 	"AV6"
+val String yInputPS3 = 		"AV4"
+val String yInputCHROME = 	"AV5"
+val String yInputAMAZON = 	"AV7"
+
+val String ySurrMOVIEADV =	"Adventure"
+
+
+// lgvt
+val String lgtvInputAMP = "HDMI_1"
+
+
+// DUNE
+val String duneHTTP = "http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code="
+
+val String duneCodeON = 		"A05FBF00"
+val String duneCodeOFF = 		"A15EBF00"
+val String duneCodeSELECT = 	"BD42BF00"
+val String duneCodePAGEUP = 	"B44BBF00"
+val String duneCodePAGEDOWN = 	"B34CBF00"
+val String duneCodeUP = 		"EA15BF00"
+val String duneCodeDOWN = 		"E916BF00"
+val String duneCodeLEFT = 		"E817BF00"
+val String duneCodeRIGHT = 		"E718BF00"
+val String duneCodeENTER = 		"EB14BF00"
+val String duneCodeRETURN = 	"FB04BF00"
+val String duneCodeINFO = 		"AF50BF00"
+val String duneCodePOPUPMENU = 	"F807BF00"
+val String duneCodeTOPMENU = 	"AE51BF00"
+val String duneCodePREV =	 	"B649BF00"
+val String duneCodeNEXT = 		"E21DBF00"
+val String duneCodeSTOP = 		"E619BF00"
+val String duneCodeSUBTITLE = 	"AB54BF00"
+val String duneCodeAUDIO = 		"BB44BF00"
+val String duneCodePLAYPAUSE = 	"A956BF00"
+val String duneCodeTOPMENUDUNE ="A857BF00"
+val String duneCodeSETUP =		"B14EBF00"
+
+
+rule "Initialize all items"
+when
+    System started
 then
-    sendCommand( LGTV_WOL, ON) 
+	hueColorTV = new HSBType("302,92,20")
+	hueColorSTANDARD = new HSBType("302,92,20")
+	hueColorGAME = new HSBType("302,92,20")
+	hueColorCANDLE = new HSBType("302,92,20")
+end
+
+
+
+// Dune Remote Control
+rule "Receive Dune Remote Commands"
+when
+	Item duneRemoteCode received command
+then
+	sendHttpGetRequest( duneHTTP + duneRemoteCode.state.toString() )
+end
+
+
+// Switch to Scenes
+rule "Switch to Scene"
+when
+	Item sceneName received command
+then
+	switch (sceneName.state) {
+		case "CHILL": {
+			// set Light
+	    	gHuesLivColor.send(hueColorLIGHT)
+
+			// Turn Off Dune
+			sendHttpGetRequest( duneHTTP + duneCodeOFF)
+			
+			// Turn off TV
+	    	lgtvPower.sendCommand(OFF)
+
+	    	// Turn Amp OFF
+	    	yamahaPower.sendCommand(OFF)
+
+		}
+		case "Movie Remote":{
+			// Turn on Dune
+			sendHttpGetRequest( duneHTTP + duneCodeON)
+			
+			// Switch Lights
+	    	gHuesLivColor.send(hueColorTV)
+	
+			// Turn on TV
+	    	lgtvPower.sendCommand(ON)
+	    	// Mute TV, Sound comes from AMP
+	    	lgtvMute.sendCommand(ON)
+	    	// Set TV Input to HDMI1
+	    	lgtvInput.sendCommand(lgtvInputAMP)
+	    	// Say Hello
+	    	lgtvToast.sendCommand("Let's see some freaky Movies!")
+	    	
+	    	// Turn Amp On
+	    	yamahaPower.sendCommand(ON)
+	    	// Switch Amp Input to Dune
+	    	yamahaInput.sendCommand(yInputDUNE)
+	    	// Switch Surround Programm to MOVIE ADVENTURE
+	    	yamahaSurround.sendCommand(ySurrMOVIEADV)
+			
+		}
+		case "PS4": {
+			// Turn Off Dune
+			sendHttpGetRequest( duneHTTP + duneCodeOFF)
+			
+			// Turn on TV
+	    	lgtvPower.sendCommand(ON)
+	    	// Mute TV, Sound comes from AMP
+	    	lgtvMute.sendCommand(ON)
+	    	// Set TV Input to HDMI1
+	    	lgtvInput.sendCommand(lgtvInputAMP)
+	    	// Say Hello
+	    	lgtvToast.sendCommand("Let's see some freaky Movies!")
+	    	
+	    	// Turn Amp On
+	    	yamahaPower.sendCommand(ON)
+	    	// Switch Amp Input to Dune
+	    	yamahaInput.sendCommand(yInputPS4BLACK)
+	    	// Switch Surround Programm to MOVIE ADVENTURE
+	    	yamahaSurround.sendCommand(ySurrMOVIEADV)
+			
+			
+		}
+		
+		case "SHUTDOWN": {
+			gHuesLivToggle.send(OFF)
+		}
+	}
+end
+
+
+
+rule lgtvWOL
+when 
+	Item lgtvPower received command ON
+then
+    sendCommand( lgtvWOL, ON) 
 end
 
 rule "Set Hue Livingroom Colors"
@@ -45,16 +198,82 @@ then
 	if(TestScene.state == ON) {
 	    hsbValue = new HSBType("302,92,20")
     	gHuesLivColor.send(hsbValue)
-    	LGTV_Power.sendCommand(ON)
+    	lgtvPower.sendCommand(ON)
+    	yamahaPower.sendCommand(ON)
+    	yamahaInput.sendCommand(yInputDUNE)
+    	yamahaSurround.sendCommand(ySurrMOVIEADV)
 	} 
 	else if( TestScene.state == OFF ) {
 		gHuesLivToggle.sendCommand(OFF)
-		LGTV_Power.sendCommand(OFF)
+		lgtvPower.sendCommand(OFF)
+    	yamahaPower.sendCommand(OFF)
 	} 
     
 end
 
 
+
+
+rule "Dune Living Room Remote Control line 1"
+        when 
+                Item Dune_RC1_Living received command 
+        then 
+                switch(receivedCommand)
+
+                {
+                    case 1 : sendHttpGetRequest("http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=EA15BF00") 
+
+                    case 2 : sendHttpGetRequest("http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=E916BF00") 
+
+                    case 3 : sendHttpGetRequest("http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=E817BF00") 
+
+                    case 4 : sendHttpGetRequest("http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=E718BF00")
+
+//                    case 5 : sendHttpGetRequest("http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=EB14BF00")
+//                    case 5 : sendHttpGetRequest("http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=A15EBF00")
+					case 5 : sendHttpGetRequest( duneHTTP + duneCodeOFF)
+					
+        }
+end
+
+rule "Dune Living Room Remote Control line 2"
+        when 
+                Item Dune_RC2_Living received command 
+        then 
+                switch(receivedCommand)
+
+                {
+                    case 1 : sendHttpGetRequest("http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=B748BF00") 
+
+                    case 2 : sendHttpGetRequest("http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=E11EBF00") 
+
+                    case 3 : sendHttpGetRequest("http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=E619BF00") 
+
+                    case 4 : sendHttpGetRequest("http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=B649BF00")
+
+//                    case 5 : sendHttpGetRequest("http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=E21DBF00")
+                    case 5 : sendHttpGetRequest("http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=A05FBF00")
+        }
+end
+
+rule "Dune Living Room Remote Control line 3"
+        when 
+                Item Dune_RC3_Living received command 
+        then 
+                switch(receivedCommand)
+
+                {
+                    case 1 : sendHttpGetRequest("http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=BB44BF00") 
+
+                    case 2 : sendHttpGetRequest("http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=AB54BF00") 
+
+                    case 3 : sendHttpGetRequest("http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=AF50BF00") 
+
+                    case 4 : sendHttpGetRequest("http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=F807BF00")
+
+                    case 5 : sendHttpGetRequest("http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=FB04BF00")
+        }
+end
 
 /*
 import org.openhab.core.library.types.*

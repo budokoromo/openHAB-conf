@@ -5,7 +5,7 @@ Group gRoomsLiv	"Living Room"		(gRooms)
 
 Group gLights 	"Lights"			(gAll)
 Group gHues 	"Hues" 				(gLights) 
-Group gHuesLiv  "Hues Living Room" 	(gLights, gRoomLiv)
+Group:Switch:OR(ON, OFF) gHuesLiv  "Hues Living Room" 	(gLights, gRoomLiv)
 
 
 //Group:Switch:OR(ON, OFF) gHuesLivToggle "Hues Living Switch"
@@ -32,22 +32,76 @@ Dimmer  hueLivNDimmer		(gHuesLiv, gHuesLivDimmer)	{ channel="hue:0210:1:HueLivin
 Color 	hueLivNColor		(gHuesLiv, gHuesLivColor)	{ channel="hue:0210:1:HueLivingN:color" } 
 Dimmer 	hueLivNColorTemp	(gHuesLiv) 					{ channel="hue:0210:1:HueLivingN:color_temperature" } 
 
+Switch	hueLivNwToggle		(gHuesLiv, gHuesLivToggle)	{ channel="hue:0210:1:HueLivingNW:color" }
+Dimmer  hueLivNwDimmer		(gHuesLiv, gHuesLivDimmer)	{ channel="hue:0210:1:HueLivingNW:color" }
+Color 	hueLivNwColor		(gHuesLiv, gHuesLivColor)	{ channel="hue:0210:1:HueLivingNW:color" }
+Dimmer 	hueLivNwColorTemp	(gHuesLiv)					{ channel="hue:0210:1:HueLivingNW:color_temperature" }
+
+Switch	hueLivNeToggle		(gHuesLiv, gHuesLivToggle)	{ channel="hue:0210:1:HueLivingNE:color" }
+Dimmer  hueLivNeDimmer		(gHuesLiv, gHuesLivDimmer)	{ channel="hue:0210:1:HueLivingNE:color" }
+Color 	hueLivNeColor		(gHuesLiv, gHuesLivColor)	{ channel="hue:0210:1:HueLivingNE:color" }
+Dimmer 	hueLivNeColorTemp	(gHuesLiv)					{ channel="hue:0210:1:HueLivingNE:color_temperature" }
+
+Switch	hueLivSToggle		(gHuesLiv, gHuesLivToggle)	{ channel="hue:0210:1:HueLivingS:color" }
+Dimmer  hueLivSDimmer		(gHuesLiv, gHuesLivDimmer)	{ channel="hue:0210:1:HueLivingS:color" }
+Color 	hueLivSColor		(gHuesLiv, gHuesLivColor)	{ channel="hue:0210:1:HueLivingS:color" }
+Dimmer 	hueLivSColorTemp	(gHuesLiv)					{ channel="hue:0210:1:HueLivingS:color_temperature" }
+
 Switch	hueLivSwToggle		(gHuesLiv, gHuesLivToggle)	{ channel="hue:0210:1:HueLivingSW:color" }
 Dimmer  hueLivSwDimmer		(gHuesLiv, gHuesLivDimmer)	{ channel="hue:0210:1:HueLivingSW:color" }
 Color 	hueLivSwColor		(gHuesLiv, gHuesLivColor)	{ channel="hue:0210:1:HueLivingSW:color" }
 Dimmer 	hueLivSwColorTemp	(gHuesLiv)					{ channel="hue:0210:1:HueLivingSW:color_temperature" }
 
+Switch	hueLivSeToggle		(gHuesLiv, gHuesLivToggle)	{ channel="hue:0210:1:HueLivingSE:color" }
+Dimmer  hueLivSeDimmer		(gHuesLiv, gHuesLivDimmer)	{ channel="hue:0210:1:HueLivingSE:color" }
+Color 	hueLivSeColor		(gHuesLiv, gHuesLivColor)	{ channel="hue:0210:1:HueLivingSE:color" }
+Dimmer 	hueLivSeColorTemp	(gHuesLiv)					{ channel="hue:0210:1:HueLivingSE:color_temperature" }
+
+
 
 // LGTV	
 
 // PowerSwitch
-Switch LGTV_Power "LGTV Power" { channel="connectsdk:WebOSTV:192_168_11_72:power"}
+Switch lgtvPower "LGTV Power" { channel="connectsdk:WebOSTV:192_168_11_72:power"}
+Switch lgtvMute "LGTV Mute" { channel="connectsdk:WebOSTV:192_168_11_72:mute"}
+Number lgtvVolume "LGTV Volume" { channel="connectsdk:WebOSTV:192_168_11_72:volume"}
+String lgtvInput "LGTV Input" { channel="connectsdk:WebOSTV:192_168_11_72:externalInput"}
+String lgtvToast "LGTV Toast" { channel="connectsdk:WebOSTV:192_168_11_72:toast"}
+String lgtvState "LGTV Toast" { channel="connectsdk:WebOSTV:192_168_11_72:mediaState"}
+
 
 // Power on is not Supported, so we need to Wake on LAN with WOL Binding (See rule file)
-Switch LGTV_WOL   "Power WOL"  { wol="192.168.11.255#3c:cd:93:7b:bb:9e" }
+Switch lgtvWOL   "Power WOL"  { wol="192.168.11.255#3c:cd:93:7b:bb:9e" }
+
+// Yamaha
+Switch yamahaPower "Yamaha Power" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:power"}
+String yamahaInput "Yamaha Input" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:input"}
+String yamahaSurround "Yamaha Input" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:surroundProgram"}
+Dimmer yamahaVolume "Yamaha Power" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:volume"} // Percentual DB
+Number yamahaVolumeDB "Yamaha Power" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:volumeDB"} // Absolute DB from -80 to 12
+String yamahaMute "Yamaha Power" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:mute"}
+Number yamahaNetradiotune "Yamaha Power" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:netradiotune"}
 
 
 Switch TestScene
+
+/* Dune items */
+/* Living */
+Switch Dune_Living      "power"     (Dune, Persistence)		{http=">[ON:GET:http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=A05FBF00] >[OFF:GET:http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=A15EBF00]", autoupdate="false"}
+
+String duneRemoteCode	// Pressing a button on dune Remote Panel puts button code in var
+
+// Scene Selector
+String sceneName
+
+String sceneSelector
+
+
+
+Number Dune_RC1_Living  ""          (Dune)                  {autoupdate="false"}
+Number Dune_RC2_Living  ""          (Dune)                  {autoupdate="false"}
+Number Dune_RC3_Living  ""          (Dune)                  {autoupdate="false"}
+
 
 // vim: syntax=Xtend syntax=openhab
 
