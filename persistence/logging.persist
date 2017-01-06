@@ -11,7 +11,7 @@ Strategies {
  */
 Items {
 	// log all temperatures on every change
-	Temperature* -> "temperatures" : strategy=everyChange
+	gTemp* -> "temperatures" : strategy=everyChange
 }
 
 // vim: syntax=Xtend syntax=openhab

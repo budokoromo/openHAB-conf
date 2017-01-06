@@ -7,11 +7,29 @@ Group gLights 	"Lights"			(gAll)
 Group gHues 	"Hues" 				(gLights) 
 Group:Switch:OR(ON, OFF) gHuesLiv  "Hues Living Room" 	(gLights, gRoomLiv)
 
+Group gPowerSwitches
+
+Group gTemp
+Group gWeather
+
 
 //Group:Switch:OR(ON, OFF) gHuesLivToggle "Hues Living Switch"
 Group gHuesLivToggle "Hues Living Switch"
 Group gHuesLivDimmer "Hues Living Dimmer"
 Group gHuesLivColor "Hues Living Color"
+
+// Groups for Heaters
+Group:Number:AVG gTempLiv "[%.1f °C]" (gTemp)
+
+
+
+String  Weather_Condition   "Pogoda [%s]" <fog> (gWeather) {weather="locationId=home, type=condition, property=commonId"}
+String  Weather_Formatted_Condition   "[MAP(weather_de.map):%s]" (gWeather) {weather="locationId=home, type=condition, property=commonId"}
+//String  Weather_Formatted_Condition (gWeather) {weather="locationId=home, type=condition, property=commonId"}
+Number  Weather_Temp        "Dzisiaj [%.2f °C]"  (gWeather) {weather="locationId=home, type=temperature, property=feel"}
+
+// Name of the active Panel for HABPanel
+String	activeHABPanel
 
 // virtual Controls for Hues
 Switch	hueLivMainToggle
@@ -19,12 +37,6 @@ Dimmer  hueLivMainDimmer
 Color	hueLivMainColor
 Dimmer	hueLivMainColorTemp
 
-Switch 	hueLivMainControllerT { channel="hue:0210:1:HueLivingMaster:color" }
-Dimmer 	hueLivMainControllerD { channel="hue:0210:1:HueLivingMaster:color" }
-Color 	hueLivMainControllerC { channel="hue:0210:1:HueLivingMaster:color" }
-Dimmer 	hueLivMainControllerCT { channel="hue:0210:1:HueLivingMaster:color_temperature" }
-
-Color ColLivMain
 
 // Hues
 Switch	hueLivNToggle	 	(gHuesLiv, gHuesLivToggle)	{ channel="hue:0210:1:HueLivingN:color" }
@@ -62,7 +74,7 @@ Dimmer 	hueLivSeColorTemp	(gHuesLiv)					{ channel="hue:0210:1:HueLivingSE:color
 // LGTV	
 
 // PowerSwitch
-Switch lgtvPower "LGTV Power" { channel="connectsdk:WebOSTV:192_168_11_72:power"}
+Switch lgtvPower "LGTV Power" (gPowerSwitches) { channel="connectsdk:WebOSTV:192_168_11_72:power"}
 Switch lgtvMute "LGTV Mute" { channel="connectsdk:WebOSTV:192_168_11_72:mute"}
 Number lgtvVolume "LGTV Volume" { channel="connectsdk:WebOSTV:192_168_11_72:volume"}
 String lgtvInput "LGTV Input" { channel="connectsdk:WebOSTV:192_168_11_72:externalInput"}
@@ -74,7 +86,7 @@ String lgtvState "LGTV Toast" { channel="connectsdk:WebOSTV:192_168_11_72:mediaS
 Switch lgtvWOL   "Power WOL"  { wol="192.168.11.255#3c:cd:93:7b:bb:9e" }
 
 // Yamaha
-Switch yamahaPower "Yamaha Power" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:power"}
+Switch yamahaPower "Yamaha Power" (gPowerSwitches) {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:power"}
 String yamahaInput "Yamaha Input" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:input"}
 String yamahaSurround "Yamaha Input" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:surroundProgram"}
 Dimmer yamahaVolume "Yamaha Power" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:volume"} // Percentual DB
@@ -87,21 +99,39 @@ Switch TestScene
 
 /* Dune items */
 /* Living */
-Switch Dune_Living      "power"     (Dune, Persistence)		{http=">[ON:GET:http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=A05FBF00] >[OFF:GET:http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=A15EBF00]", autoupdate="false"}
+Switch Dune_Living      "power"     (gPowerSwitches, Dune, Persistence)		{http=">[ON:GET:http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=A05FBF00] >[OFF:GET:http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=A15EBF00]", autoupdate="false"}
+
 
 String duneRemoteCode	// Pressing a button on dune Remote Panel puts button code in var
 
 // Scene Selector
 String sceneName
 
-String sceneSelector
 
+// Homematic Items
+Number heatLivEActTemp "heatLivEActTemp" (gTempLiv) { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#ACTUAL_TEMPERATURE" }
+Switch heatLivEAutoMode "heatLivEAutoMode" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#AUTO_MODE" }
+Switch heatLivEComfMode "heatLivEComfMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#COMFORT_MODE" }
+Switch heatLivELowMode "heatLivELowMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#LOWERING_MODE" }
+Number heatLivEManuMode "heatLivEManuMode" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#MANU_MODE" }
+Switch heatLivEBoostMode "heatLivEBoostMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#BOOST_MODE" }
+String heatLivECtrlMode "heatLivECtrlMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#CONTROL_MODE" }
+Number heatLivEBoostState "heatLivEBoostState" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#BOOST_STATE" }
+Number heatLivESetTemp "heatLivESetTemp" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#SET_TEMPERATURE" }
+Number heatLivEValveState "heatLivEValveState" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#VALVE_STATE" }
 
-
-Number Dune_RC1_Living  ""          (Dune)                  {autoupdate="false"}
-Number Dune_RC2_Living  ""          (Dune)                  {autoupdate="false"}
-Number Dune_RC3_Living  ""          (Dune)                  {autoupdate="false"}
-
+Number heatLivWActTemp "heatLivWActTemp" (gTempLiv) { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#ACTUAL_TEMPERATURE" }
+Switch heatLivWAutoMode "heatLivWAutoMode" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#AUTO_MODE" }
+Switch heatLivWComfMode "heatLivWComfMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#COMFORT_MODE" }
+Switch heatLivWLowMode "heatLivWLowMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#LOWERING_MODE" }
+Number heatLivWManuMode "heatLivWManuMode" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#MANU_MODE" }
+Switch heatLivWBoostMode "heatLivWBoostMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#BOOST_MODE" }
+String heatLivWCtrlMode "heatLivWCtrlMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#CONTROL_MODE" }
+Number heatLivWBoostState "heatLivWBoostState" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#BOOST_STATE" }
+Number heatLivWSetTemp "heatLivWSetTemp" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#SET_TEMPERATURE" }
+Number heatLivWValveState "heatLivWValveState" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#VALVE_STATE" } 
+ 
+ 
 
 // vim: syntax=Xtend syntax=openhab
 
