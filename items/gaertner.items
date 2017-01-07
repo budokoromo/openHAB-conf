@@ -23,6 +23,9 @@ Group:Number:AVG gTempLiv "[%.1f °C]" (gTemp)
 
 
 
+Switch TestButton
+
+
 String  Weather_Condition   "Pogoda [%s]" <fog> (gWeather) {weather="locationId=home, type=condition, property=commonId"}
 String  Weather_Formatted_Condition   "[MAP(weather_de.map):%s]" (gWeather) {weather="locationId=home, type=condition, property=commonId"}
 //String  Weather_Formatted_Condition (gWeather) {weather="locationId=home, type=condition, property=commonId"}

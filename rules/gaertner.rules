@@ -199,7 +199,9 @@ then
 		}
 		case "SHUTDOWN": {
 //			gHuesLivColor.send(OFF)
-			hueLivMainColor.send(OFF)
+//			hueLivMainColor.send(OFF)
+	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"on": false}')
+    logInfo("HVAC","HVAC Command sent - output: "+output)
 //			gHuesLivToggle.send(OFF)
 			gPowerSwitches.send(OFF)
 //			ColLivMain.postUpdate(OFF)
@@ -223,12 +225,25 @@ end
 
 
 
-rule "Set Hue Livingroom Colors"
+
+
+
+
+rule "Set Sync hueLivMainColor"
 when
-	Item hueLivMainController received update
+	Item gHuesLivColor changed
 then
-//	gHuesLivColor.send(hueLivMainController.state as HSBType)
+	if(gHuesLivColor.state != UNDEF) {
+		logInfo("HVAC","hueLivMainColor.state =  "+ hueLivMainColor.state  )
+
+		hueLivMainColor.state = gHuesLivColor.state as HSBType		
+
+//		hueLivMainColor.sendCommand(gHuesLivColor)		
+		hueLivMainColor.postUpdate(gHuesLivColor.state)		
+		logInfo("HVAC","hueLivMainColor.state =  "+ hueLivMainColor.state  )
+	}
 end
+
 
 
 
@@ -238,11 +253,30 @@ rule "Set RGB value"
     then
             hsbValue = hueLivMainColor.state as HSBType
             
+            // Umrechnung der Wertesysteme HSB: hue = [0..360], sat = [0..100], bri = [0..100] / Philips: hue = [0..65535], sat = [0-255], bri = [0..255]
+            
+            var int hue = Math.round(hsbValue.getHue().floatValue() / 360 * 65535)
+            var int sat = Math.round(hsbValue.getSaturation().floatValue()  / 100 * 255)
+            var int bri = Math.round(hsbValue.getBrightness().floatValue()  / 100 * 255)
+            
+		    logInfo("HVAC","hsbValue.getHue() = "+hue  )
+		    logInfo("HVAC","hsbValue.getSaturation() = "+sat)
+		    logInfo("HVAC","hsbValue.getBrightness() = "+bri)
+		    
+            
+	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
+    logInfo("HVAC","HVAC Command sent - output: "+ '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
+    logInfo("HVAC","HVAC Command sent - output: "+output)
+
+
+ /*            
 			gHuesLivColor.send(hsbValue)
  			if (hsbValue.getBrightness() as Number != 0) 
 				gHuesLivColor.postUpdate(ON)
 			else 
 				gHuesLivColor.postUpdate(OFF)
+*/
+
 				
 			
  /* 			gHuesLivColor.members.forEach( s |
@@ -254,6 +288,41 @@ rule "Set RGB value"
 end
 
 
+rule "Switch Light OFF"
+    when
+            Item hueLivMainToggle changed to OFF
+    then
+            
+	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"on" : false }' )
+//    logInfo("HVAC","HVAC Command sent - output: "+ '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
+
+	hueLivMainColor.postUpdate(hueLivMainColor.state)
+    logInfo("HVAC","HVAC Command sent - output: "+output)
+
+end
+
+
+rule "Switch Light ON"
+    when
+            Item hueLivMainToggle changed to ON
+    then
+            
+	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"on" : true }' )
+//    logInfo("HVAC","HVAC Command sent - output: "+ '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
+	hueLivMainColor.postUpdate(hueLivMainColor.state)
+    logInfo("HVAC","HVAC Command sent - output: "+output)
+
+end
+
+
+rule "Hue Change Hue group color"
+when
+	Item TestButton changed
+then
+//	var output = sendHttpPostRequest("http://192.168.1.11:80/tstat", "application/json", '{"tmode":' + receivedCommand + '}')
+	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"on": true, "hue": 2000, "effect": "colorloop"}')
+    logInfo("HVAC","HVAC Command sent - output: "+output)
+end	
 
 
 
