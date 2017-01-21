@@ -119,6 +119,7 @@ then
 			// Switch Lights
 //	    	gHuesLivColor.send(hueColorTV)
 			hueLivMainColor.send(hueColorTV)
+			hueLivMainToggle.sendCommand(ON)
 	
 			// Turn on TV
 	    	lgtvPower.sendCommand(ON)
@@ -156,6 +157,10 @@ then
 	    	yamahaInput.sendCommand(yInputPS4BLACK)
 	    	// Switch Surround Programm to MOVIE ADVENTURE
 	    	yamahaSurround.sendCommand(ySurrENTACTGAME)
+
+			// switch to "Easy Remote" Panel
+			activeHABPanel.sendCommand("Easy Remote")
+
 		}
 		case "MUSIC": {
 			// Turn Off Dune
@@ -176,6 +181,10 @@ then
 	    	yamahaInput.sendCommand(yInputCHROME)
 	    	// Switch Surround Programm to MOVIE ADVENTURE
 	    	yamahaSurround.sendCommand(ySurr2CH)
+
+			// switch to "Easy Remote" Panel
+			activeHABPanel.sendCommand("Easy Remote")
+
 		}
 		case "NETFLIX": {
 			// Turn Off Dune
@@ -196,18 +205,27 @@ then
 	    	yamahaInput.sendCommand(yInputTV)
 	    	// Switch Surround Programm to MOVIE ADVENTURE
 	    	yamahaSurround.sendCommand(ySurrMOVIEADV)
+
+
+			// switch to "Easy Remote" Panel
+			activeHABPanel.sendCommand("Easy Remote")
 		}
 		case "SHUTDOWN": {
 //			gHuesLivColor.send(OFF)
 //			hueLivMainColor.send(OFF)
-	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"on": false}')
-    logInfo("HVAC","HVAC Command sent - output: "+output)
+
+			hueLivMainToggle.sendCommand(OFF)
+
+//	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"on": false}')
+//    logInfo("HVAC","HVAC Command sent - output: "+output)
+
+
 //			gHuesLivToggle.send(OFF)
 			gPowerSwitches.send(OFF)
 //			ColLivMain.postUpdate(OFF)
 //			gHuesLivToggle.postUpdate(OFF)
 //			gHuesLivDimmer.postUpdate(0)
-			gHuesLivColor.postUpdate(OFF)
+//			gHuesLivColor.postUpdate(OFF)
 			
 			
 		}
@@ -227,7 +245,7 @@ end
 
 
 
-
+/* 
 
 rule "Set Sync hueLivMainColor"
 when
@@ -238,18 +256,31 @@ then
 
 		hueLivMainColor.state = gHuesLivColor.state as HSBType		
 
-//		hueLivMainColor.sendCommand(gHuesLivColor)		
+
+
 		hueLivMainColor.postUpdate(gHuesLivColor.state)		
+
+
+
+//		if(gHuesLivToggle == ON)
+//			hueLivMainToggle.postUpdate(ON)
+//		else
+//			hueLivMainToggle.postUpdate(OFF)
+	
+	
+	
 		logInfo("HVAC","hueLivMainColor.state =  "+ hueLivMainColor.state  )
+		
+		
 	}
 end
-
+*/
 
 
 
 rule "Set RGB value"
     when
-            Item hueLivMainColor changed
+            Item hueLivMainColor received update
     then
             hsbValue = hueLivMainColor.state as HSBType
             
@@ -265,8 +296,8 @@ rule "Set RGB value"
 		    
             
 	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
-    logInfo("HVAC","HVAC Command sent - output: "+ '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
-    logInfo("HVAC","HVAC Command sent - output: "+output)
+    logInfo("Set RGB Value","Set RGB Value received update - output: "+ '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
+    logInfo("Set RGB Value","Set RGB Value received update - output: "+output)
 
 
  /*            
@@ -297,7 +328,7 @@ rule "Switch Light OFF"
 //    logInfo("HVAC","HVAC Command sent - output: "+ '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
 
 	hueLivMainColor.postUpdate(hueLivMainColor.state)
-    logInfo("HVAC","HVAC Command sent - output: "+output)
+    logInfo("Switch Light OFF","Switch Light OFF Command sent - output: "+output)
 
 end
 
@@ -310,7 +341,7 @@ rule "Switch Light ON"
 	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"on" : true }' )
 //    logInfo("HVAC","HVAC Command sent - output: "+ '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
 	hueLivMainColor.postUpdate(hueLivMainColor.state)
-    logInfo("HVAC","HVAC Command sent - output: "+output)
+    logInfo("Switch Light ON","Switch Light ON Command sent - output: "+output)
 
 end
 

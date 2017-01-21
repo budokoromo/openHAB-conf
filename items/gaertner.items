@@ -3,25 +3,31 @@ Group gAll		"All"
 Group gRooms	"Rooms"				(gAll)
 Group gRoomsLiv	"Living Room"		(gRooms)
 
-Group gLights 	"Lights"			(gAll)
-Group gHues 	"Hues" 				(gLights) 
-Group:Switch:OR(ON, OFF) gHuesLiv  "Hues Living Room" 	(gLights, gRoomLiv)
+
+//Group gLights 	"Lights"			(gAll)
+//Group gHues 	"Hues" 				(gLights) 
+//Group:Switch:OR(ON, OFF) gHuesLiv  "Hues Living Room" 	(gLights, gRoomLiv)
 
 Group gPowerSwitches
 
 Group gTemp
 Group gWeather
+Group gLight
+Group gHue 			(gLight)
+Group gHueLiv 		(gHue)
 
 
-//Group:Switch:OR(ON, OFF) gHuesLivToggle "Hues Living Switch"
+/*
 Group gHuesLivToggle "Hues Living Switch"
 Group gHuesLivDimmer "Hues Living Dimmer"
 Group gHuesLivColor "Hues Living Color"
+*/
+
 
 // Groups for Heaters
 Group:Number:AVG gTempLiv "[%.1f °C]" (gTemp)
 
-
+ 
 
 Switch TestButton
 
@@ -41,6 +47,7 @@ Color	hueLivMainColor
 Dimmer	hueLivMainColorTemp
 
 
+/* 
 // Hues
 Switch	hueLivNToggle	 	(gHuesLiv, gHuesLivToggle)	{ channel="hue:0210:1:HueLivingN:color" }
 Dimmer  hueLivNDimmer		(gHuesLiv, gHuesLivDimmer)	{ channel="hue:0210:1:HueLivingN:color" } 
@@ -71,7 +78,7 @@ Switch	hueLivSeToggle		(gHuesLiv, gHuesLivToggle)	{ channel="hue:0210:1:HueLivin
 Dimmer  hueLivSeDimmer		(gHuesLiv, gHuesLivDimmer)	{ channel="hue:0210:1:HueLivingSE:color" }
 Color 	hueLivSeColor		(gHuesLiv, gHuesLivColor)	{ channel="hue:0210:1:HueLivingSE:color" }
 Dimmer 	hueLivSeColorTemp	(gHuesLiv)					{ channel="hue:0210:1:HueLivingSE:color_temperature" }
-
+*/
 
 
 // LGTV	
@@ -110,8 +117,10 @@ String duneRemoteCode	// Pressing a button on dune Remote Panel puts button code
 // Scene Selector
 String sceneName
 
-
+ 
 // Homematic Items
+
+// Heating
 Number heatLivEActTemp "heatLivEActTemp" (gTempLiv) { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#ACTUAL_TEMPERATURE" }
 Switch heatLivEAutoMode "heatLivEAutoMode" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#AUTO_MODE" }
 Switch heatLivEComfMode "heatLivEComfMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#COMFORT_MODE" }
@@ -133,6 +142,19 @@ String heatLivWCtrlMode "heatLivWCtrlMode" { channel ="homematic:HM-CC-RT-DN:ccu
 Number heatLivWBoostState "heatLivWBoostState" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#BOOST_STATE" }
 Number heatLivWSetTemp "heatLivWSetTemp" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#SET_TEMPERATURE" }
 Number heatLivWValveState "heatLivWValveState" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#VALVE_STATE" } 
+
+
+
+// Window/ Door Contacts
+
+Contact contKitDoorAtrium "contKitDoorAtrium" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1469830:1#STATE"}
+
+Contact contLivDoorW "contLivDoorW" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1470385:1#STATE"}
+Contact contLivDoorE "contLivDoorE" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1469816:1#STATE"}
+Contact contLivWinRoof "contLivWinRoof" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1470280:1#STATE"}
+Contact contLivEntrance "contLivEntrance" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1468715:1#STATE"}
+ 
+
  
  
 
