@@ -1,0 +1,772 @@
+[
+    {
+        "id": "Living",
+        "name": "Living",
+        "widgets": [
+            {
+                "name": "New Widget",
+                "sizeX": 3,
+                "sizeY": 3,
+                "item": "hueLivMainColor",
+                "type": "colorpicker",
+                "row": 4,
+                "col": 0,
+                "$$hashKey": "object:219"
+            },
+            {
+                "name": "Ein / Aus",
+                "sizeX": 3,
+                "sizeY": 3,
+                "item": "hueLivMainToggle",
+                "type": "switch",
+                "row": 1,
+                "col": 0,
+                "iconset": "smarthome-set",
+                "icon": "bulb",
+                "icon_size": "128",
+                "$$hashKey": "object:220"
+            },
+            {
+                "name": "Licht",
+                "sizeX": 2,
+                "sizeY": 6,
+                "item": "hueLivMainColor",
+                "type": "slider",
+                "row": 1,
+                "col": 3,
+                "vertical": true,
+                "floor": 0,
+                "ceil": 100,
+                "step": 1,
+                "$$hashKey": "object:221"
+            },
+            {
+                "name": "Netflix / Amazon",
+                "sizeX": 2,
+                "sizeY": 2,
+                "item": "sceneName",
+                "type": "button",
+                "row": 3,
+                "col": 7,
+                "foreground_active": "#66FF66",
+                "backdrop_center": true,
+                "iconset": "freepik-gadgets",
+                "icon": "old-tv-with-antennas",
+                "icon_size": "64",
+                "icon_replacestext": false,
+                "command": "NETFLIX",
+                "$$hashKey": "object:222"
+            },
+            {
+                "name": "Film",
+                "sizeX": 2,
+                "sizeY": 2,
+                "item": "sceneName",
+                "type": "button",
+                "foreground_active": "#66FF66",
+                "backdrop_center": true,
+                "iconset": "freepik-gadgets",
+                "icon": "vintage-camcorder",
+                "icon_size": "64",
+                "icon_replacestext": false,
+                "row": 3,
+                "col": 5,
+                "command": "Movie Remote",
+                "$$hashKey": "object:223"
+            },
+            {
+                "name": "Musik",
+                "sizeX": 2,
+                "sizeY": 2,
+                "item": "sceneName",
+                "type": "button",
+                "foreground_active": "#66FF66",
+                "backdrop_center": true,
+                "iconset": "freepik-gadgets",
+                "icon": "audio-headphones",
+                "icon_size": "64",
+                "icon_replacestext": false,
+                "row": 5,
+                "col": 5,
+                "command": "MUSIC",
+                "$$hashKey": "object:224"
+            },
+            {
+                "name": "Spielen",
+                "sizeX": 2,
+                "sizeY": 2,
+                "item": "sceneName",
+                "type": "button",
+                "foreground_active": "#66FF66",
+                "backdrop_center": true,
+                "iconset": "freepik-gadgets",
+                "icon": "xbox-gamepad",
+                "icon_size": "64",
+                "icon_replacestext": false,
+                "row": 5,
+                "col": 7,
+                "command": "PS4",
+                "$$hashKey": "object:225"
+            },
+            {
+                "name": "Chillen",
+                "sizeX": 2,
+                "sizeY": 2,
+                "item": "sceneName",
+                "type": "button",
+                "foreground_active": "#66FF66",
+                "backdrop_center": true,
+                "iconset": "freepik-household",
+                "icon": "couch-10",
+                "icon_size": "64",
+                "icon_replacestext": false,
+                "row": 1,
+                "col": 7,
+                "command": "CHILL",
+                "$$hashKey": "object:226"
+            },
+            {
+                "name": "Alles AUS",
+                "sizeX": 2,
+                "sizeY": 2,
+                "item": "sceneName",
+                "type": "button",
+                "foreground_active": "#66FF66",
+                "backdrop_center": true,
+                "iconset": "smarthome-set",
+                "icon": "power-button",
+                "icon_size": "80",
+                "icon_replacestext": false,
+                "command": "SHUTDOWN",
+                "row": 1,
+                "col": 5,
+                "foreground": "#FFFFFF",
+                "backdrop_iconset": "knx-user-forum-n-z",
+                "backdrop_icon": "weather_rain_heavy",
+                "$$hashKey": "object:227"
+            },
+            {
+                "name": "Licht",
+                "sizeX": 5,
+                "sizeY": 1,
+                "item": null,
+                "type": "label",
+                "row": 0,
+                "col": 0,
+                "font_size": "32",
+                "$$hashKey": "object:228"
+            },
+            {
+                "name": "Szenen",
+                "sizeX": 4,
+                "sizeY": 1,
+                "item": null,
+                "type": "label",
+                "font_size": "32",
+                "row": 0,
+                "col": 5,
+                "$$hashKey": "object:229"
+            },
+            {
+                "name": "Heizung",
+                "sizeX": 3,
+                "sizeY": 1,
+                "item": null,
+                "type": "label",
+                "font_size": "32",
+                "row": 0,
+                "col": 9,
+                "$$hashKey": "object:230"
+            },
+            {
+                "name": "",
+                "sizeX": 3,
+                "sizeY": 3,
+                "type": "template",
+                "customwidget": "current-weather",
+                "row": 4,
+                "col": 9,
+                "config": {
+                    "weather_condition": "Weather_Condition",
+                    "formatted_weather_condition": "Weather_Formatted_Condition",
+                    "temperature": "Weather_Temp"
+                },
+                "dontwrap": false,
+                "nobackground": false,
+                "$$hashKey": "object:231"
+            },
+            {
+                "name": "",
+                "sizeX": 3,
+                "sizeY": 1,
+                "item": "gTempLiv",
+                "type": "dummy",
+                "row": 1,
+                "col": 9,
+                "font_size": "20",
+                "nolinebreak": false,
+                "unit": "",
+                "useserverformat": true,
+                "icon_size": 32,
+                "icon_nolinebreak": false,
+                "icon_replacestext": false,
+                "backdrop_iconset": "smarthome-set",
+                "backdrop_icon": "heater",
+                "backdrop_center": true,
+                "$$hashKey": "object:232"
+            },
+            {
+                "name": "Rollos",
+                "sizeX": 1,
+                "sizeY": 2,
+                "item": null,
+                "type": "dummy",
+                "row": 2,
+                "col": 9,
+                "$$hashKey": "object:233"
+            },
+            {
+                "name": "Balkontür West",
+                "sizeX": 1,
+                "sizeY": 1,
+                "type": "template",
+                "customwidget": "contact-state",
+                "row": 2,
+                "col": 11,
+                "config": {
+                    "contact_id": "contLivDoorW",
+                    "contact_label": "Balk. W",
+                    "font_size": "2"
+                },
+                "$$hashKey": "object:234"
+            },
+            {
+                "name": "Haustür",
+                "sizeX": 1,
+                "sizeY": 1,
+                "type": "template",
+                "customwidget": "contact-state",
+                "config": {
+                    "contact_id": "contLivEntrance",
+                    "contact_label": "Haustür",
+                    "font_size": "2"
+                },
+                "row": 2,
+                "col": 10,
+                "$$hashKey": "object:235"
+            },
+            {
+                "name": "Dach Fenster",
+                "sizeX": 1,
+                "sizeY": 1,
+                "type": "template",
+                "customwidget": "contact-state",
+                "config": {
+                    "contact_id": "contLivWinRoof",
+                    "contact_label": "Dach",
+                    "font_size": "2"
+                },
+                "row": 3,
+                "col": 10,
+                "$$hashKey": "object:236"
+            },
+            {
+                "name": "Balkontür West",
+                "sizeX": 1,
+                "sizeY": 1,
+                "type": "template",
+                "customwidget": "contact-state",
+                "config": {
+                    "contact_id": "contLivDoorE",
+                    "contact_label": "Balk. Ost",
+                    "font_size": "2"
+                },
+                "row": 3,
+                "col": 11,
+                "$$hashKey": "object:237"
+            }
+        ],
+        "row": 0,
+        "col": 0,
+        "$$hashKey": "object:19"
+    },
+    {
+        "id": "Movie Remote",
+        "name": "Movie Remote",
+        "widgets": [
+            {
+                "name": "ENTER",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": "duneRemoteCode",
+                "type": "button",
+                "row": 1,
+                "col": 10,
+                "command": "EB14BF00"
+            },
+            {
+                "name": "RIGHT",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": "duneRemoteCode",
+                "type": "button",
+                "row": 1,
+                "col": 11,
+                "command": "E718BF00"
+            },
+            {
+                "name": "LEFT",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": "duneRemoteCode",
+                "type": "button",
+                "row": 1,
+                "col": 9,
+                "command": "E817BF00"
+            },
+            {
+                "name": "UP",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": "duneRemoteCode",
+                "type": "button",
+                "row": 0,
+                "col": 10,
+                "command": "EA15BF00"
+            },
+            {
+                "name": "DOWN",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": "duneRemoteCode",
+                "type": "button",
+                "row": 2,
+                "col": 10,
+                "command": "E916BF00"
+            },
+            {
+                "name": "Page UP",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": "duneRemoteCode",
+                "type": "button",
+                "row": 0,
+                "col": 9,
+                "command": "B44BBF00"
+            },
+            {
+                "name": "7",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": null,
+                "type": "button",
+                "row": 4,
+                "col": 0
+            },
+            {
+                "name": "8",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": null,
+                "type": "button",
+                "row": 4,
+                "col": 1
+            },
+            {
+                "name": "9",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": null,
+                "type": "button",
+                "row": 4,
+                "col": 2
+            },
+            {
+                "name": "Page DOWN",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": "duneRemoteCode",
+                "type": "button",
+                "row": 2,
+                "col": 9,
+                "command": "B34CBF00"
+            },
+            {
+                "name": "4",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": null,
+                "type": "button",
+                "row": 3,
+                "col": 0
+            },
+            {
+                "name": "5",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": null,
+                "type": "button",
+                "row": 3,
+                "col": 1
+            },
+            {
+                "name": "1",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": null,
+                "type": "button",
+                "row": 2,
+                "col": 0
+            },
+            {
+                "name": "2",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": null,
+                "type": "button",
+                "row": 2,
+                "col": 1
+            },
+            {
+                "name": "3",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": null,
+                "type": "button",
+                "row": 2,
+                "col": 2
+            },
+            {
+                "name": "6",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": null,
+                "type": "button",
+                "row": 3,
+                "col": 2
+            },
+            {
+                "name": "New Widget",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": null,
+                "type": "button",
+                "row": 5,
+                "col": 0
+            },
+            {
+                "name": "0",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": null,
+                "type": "button",
+                "row": 5,
+                "col": 1
+            },
+            {
+                "name": "New Widget",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": null,
+                "type": "button",
+                "row": 5,
+                "col": 2
+            },
+            {
+                "name": "STOP",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": "duneRemoteCode",
+                "type": "button",
+                "row": 5,
+                "col": 11,
+                "command": "E619BF00",
+                "iconset": "knx-user-forum-a-e",
+                "icon": "audio_stop",
+                "icon_replacestext": true,
+                "icon_size": 32
+            },
+            {
+                "name": "RETURN",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": "duneRemoteCode",
+                "type": "button",
+                "row": 4,
+                "col": 10,
+                "command": "FB04BF00",
+                "iconset": "knx-user-forum-a-e",
+                "icon": "control_return",
+                "icon_size": 32,
+                "icon_replacestext": true
+            },
+            {
+                "name": "PLAY / PAUSE",
+                "sizeX": 2,
+                "sizeY": 1,
+                "item": "duneRemoteCode",
+                "type": "button",
+                "row": 5,
+                "col": 9,
+                "command": "A956BF00",
+                "iconset": "knx-user-forum-a-e",
+                "icon": "audio_play",
+                "icon_size": 32,
+                "icon_replacestext": true
+            },
+            {
+                "name": "INFO",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": "duneRemoteCode",
+                "type": "button",
+                "row": 0,
+                "col": 4,
+                "command": "AF50BF00"
+            },
+            {
+                "name": "POP UP MENU",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": "duneRemoteCode",
+                "type": "button",
+                "row": 0,
+                "col": 7,
+                "command": "F807BF00"
+            },
+            {
+                "name": "PREVIOUS",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": null,
+                "type": "button",
+                "row": 4,
+                "col": 9,
+                "iconset": "knx-user-forum-a-e",
+                "icon": "control_arrow_leftward",
+                "icon_size": 32,
+                "icon_nolinebreak": true,
+                "icon_replacestext": true
+            },
+            {
+                "name": "NEXT",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": null,
+                "type": "button",
+                "row": 4,
+                "col": 11,
+                "iconset": "knx-user-forum-a-e",
+                "icon": "control_arrow_rightward",
+                "icon_size": 32,
+                "icon_replacestext": true
+            },
+            {
+                "name": "SUBTITLE",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": "duneRemoteCode",
+                "type": "button",
+                "command": "AB54BF00",
+                "row": 0,
+                "col": 5
+            },
+            {
+                "name": "AUDIO",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": "duneRemoteCode",
+                "type": "button",
+                "command": "BB44BF00",
+                "row": 0,
+                "col": 6
+            },
+            {
+                "name": "VOLUME",
+                "sizeX": 4,
+                "sizeY": 4,
+                "item": "yamahaVolume",
+                "type": "knob",
+                "row": 2,
+                "col": 4,
+                "floor": 0,
+                "ceil": 100,
+                "step": 1,
+                "ranges": [],
+                "startAngle": 30,
+                "endAngle": 330
+            },
+            {
+                "name": "Vol UP",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": "duneRemoteCode",
+                "type": "button",
+                "command": "",
+                "row": 0,
+                "col": 11
+            },
+            {
+                "name": "Vol Down",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": "duneRemoteCode",
+                "type": "button",
+                "command": "",
+                "row": 2,
+                "col": 11
+            },
+            {
+                "name": "HAUPT SEITE",
+                "sizeX": 3,
+                "sizeY": 1,
+                "item": "activeHABPanel",
+                "type": "button",
+                "command": "Living",
+                "row": 0,
+                "col": 0
+            }
+        ],
+        "row": 1,
+        "col": 0,
+        "tile": {},
+        "$$hashKey": "object:21"
+    },
+    {
+        "id": "Easy Remote",
+        "name": "Easy Remote",
+        "widgets": [
+            {
+                "name": "HAUPT SEITE",
+                "sizeX": 3,
+                "sizeY": 1,
+                "item": "activeHABPanel",
+                "type": "button",
+                "command": "Living",
+                "row": 0,
+                "col": 0
+            },
+            {
+                "name": "VOLUME",
+                "sizeX": 4,
+                "sizeY": 4,
+                "item": "yamahaVolume",
+                "type": "knob",
+                "floor": 0,
+                "ceil": 100,
+                "step": 1,
+                "ranges": [],
+                "startAngle": 30,
+                "endAngle": 330,
+                "row": 2,
+                "col": 4
+            }
+        ],
+        "row": 2,
+        "col": 0,
+        "$$hashKey": "object:22"
+    },
+    {
+        "id": "TestBoard",
+        "name": "TestBoard",
+        "widgets": [
+            {
+                "name": "ContactOpenClose",
+                "sizeX": 2,
+                "sizeY": 2,
+                "item": null,
+                "type": "template",
+                "row": 0,
+                "col": 0,
+                "template": "<button style=\"width: 100%; height: 3em;\nborder: 0; color: white; background: midnightblue;\nfont-size: 30px\" ng-click=\"sendCmd('Bedroom_Rollershutter', 'UP')\">\n<i class=\"glyphicon glyphicon-resize-full\"></i>\n</button>\n\n<br />\n\n<button style=\"width: 100%; height: 3em;\nborder: 0; color: white; background: red;\nfont-size: 30px\" ng-click=\"sendCmd('Bedroom_Rollershutter', 'STOP')\">\nSTOP\n</button>\n\n<br />\n\n<button style=\"width: 100%; height: 3em;\nborder: 0; color: white; background: midnightblue;\nfont-size: 30px\" ng-click=\"sendCmd('Bedroom_Rollershutter', 'DOWN')\">\n<i class=\"glyphicon glyphicon-resize-small\"></i>\n</button>"
+            },
+            {
+                "name": "ContactState",
+                "sizeX": 1,
+                "sizeY": 1,
+                "item": null,
+                "type": "template",
+                "row": 0,
+                "col": 2,
+                "template": "<p>Balkontür West</p>\n\n<div ng-if=\"itemValue('contLivDoorW')=='OPEN'\">\n  <i class=\"glyphicon glyphicon-resize-full\" style=\"color: red; font-size: 4em\"></i>\n</div>\n\n<div ng-if=\"itemValue('contLivDoorW')=='CLOSED'\">\n  <i class=\"glyphicon glyphicon-resize-small\" style=\"color: green; font-size: 4em\"></i>\n</div>\n",
+                "dontwrap": false,
+                "nobackground": false
+            },
+            {
+                "name": "New Widget",
+                "sizeX": 4,
+                "sizeY": 4,
+                "type": "template",
+                "customwidget": "contact-state",
+                "row": 0,
+                "col": 3,
+                "config": {
+                    "contact_id": "contLivDoorW",
+                    "contact_label": "Balkontür West",
+                    "font_size": "7"
+                }
+            },
+            {
+                "name": "New Widget",
+                "sizeX": 4,
+                "sizeY": 4,
+                "type": "template",
+                "customwidget": "contact-state",
+                "row": 0,
+                "col": 7,
+                "config": {
+                    "contact_id": "contLivEntrance",
+                    "contact_label": "Door",
+                    "font_size": "2"
+                }
+            }
+        ],
+        "row": 3,
+        "col": 0,
+        "$$hashKey": "object:23"
+    },
+    {
+        "id": "Entrance",
+        "name": "Entrance",
+        "widgets": [
+            {
+                "name": "Ein / Aus",
+                "sizeX": 12,
+                "sizeY": 21,
+                "item": "hueLivMainToggle",
+                "type": "switch",
+                "iconset": "smarthome-set",
+                "icon": "bulb",
+                "icon_size": "180",
+                "row": 0,
+                "col": 0
+            }
+        ],
+        "row": 4,
+        "col": 0,
+        "$$hashKey": "object:24"
+    },
+    {
+        "id": "TestHueGroups",
+        "name": "TestHueGroups",
+        "widgets": [
+            {
+                "name": "New Widget",
+                "sizeX": 4,
+                "sizeY": 4,
+                "item": "hueMainToggle",
+                "type": "button",
+                "row": 0,
+                "col": 4,
+                "action_type": "toggle",
+                "command": "ON",
+                "command_alt": "OFF",
+                "$$hashKey": "object:51"
+            }
+        ],
+        "row": 0,
+        "col": 1,
+        "tile": {},
+        "$$hashKey": "object:20"
+    }
+]

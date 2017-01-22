@@ -1,0 +1,23 @@
+{
+    "name": "contact-state",
+    "author": "Jochen Scherl",
+    "description": "See the OPEN / CLOSED state of a Homematic Contact",
+    "settings": [
+        {
+            "type": "item",
+            "id": "contact_id",
+            "label": "ContactID"
+        },
+        {
+            "type": "string",
+            "id": "contact_label",
+            "label": "Bezeichnung"
+        },
+        {
+            "type": "string",
+            "id": "font_size",
+            "label": "Font Size in em"
+        }
+    ],
+    "template": "<p>{{config.contact_label}}</p>\n\n</style>\n<div ng-if=\"itemValue(config.contact_id)=='OPEN'\">\n  <i class=\"glyphicon glyphicon-resize-full\" style=\"color: red; font-size: {{config.font_size}}em\"></i>\n</div>\n\n<div ng-if=\"itemValue(config.contact_id)=='CLOSED'\">\n  <i class=\"glyphicon glyphicon-resize-small\" style=\"color: green; font-size: {{config.font_size}}em\"\"></i>\n</div>\n"
+}
