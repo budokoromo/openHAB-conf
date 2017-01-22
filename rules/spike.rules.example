@@ -1,12 +1,6 @@
 import org.openhab.core.library.types.*
 import java.util.ArrayList
-import java.util.Arrays
 import java.util.List
-import java.util.Map
-import java.util.HashMap
-import java.util.Set
-import java.util.List
-
 
 var HSBType hsbValue
 var HSBType hsbValue2
@@ -78,138 +72,12 @@ val String duneCodeTOPMENUDUNE ="A857BF00"
 val String duneCodeSETUP =		"B14EBF00"
 
 
-//var ArrayList<String> hueGroupParams = new ArrayList()
-//var HashMap<String, ArrayList<String>> hueGroups = new HashMap()  // Hashmap for alert Texts
-var HashMap<String, ArrayList<String>> hueGroups = new HashMap()  // Hashmap for alert Texts
-var HashMap<String, HashMap<String, String>> hueGroupsMap = new HashMap(10)
-var HashMap<String, String> hueGroupData = new HashMap(4)
-
-
-
-
-
-val org.eclipse.xtext.xbase.lib.Functions$Function3 toggleHueGroup = [
-		String receiver,
-    	String msgTitle,
-		String msgBody |
-
-
-	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"on" : true }' )
-//    logInfo("HVAC","HVAC Command sent - output: "+ '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
-	hueLivMainColor.postUpdate(hueLivMainColor.state)
-    logInfo("Switch Light ON","Switch Light ON Command sent - output: "+output)
-
-
-	var String strCurl
-
-	switch(receiver)
-	{
-		case "nora":
-		{
-//			strCurl = "curl@@-u@@ampF4JfMvVpoYkSrifrtBAbxQdFMIvCi:@@-d@@type=note@@-d@@title=\""	
-			strCurl = "curl@@-u@@ampF4JfMvVpoYkSrifrtBAbxQdFMIvCi:@@-d@@type=note@@-d@@title=\""	
-		}
-		case "jochen":
-		{
-//			strCurl = "curl@@-u@@RKsuflYMm5SFo625ah6oAVaGfqjkdbWs:@@-d@@type=note@@-d@@title=\""	
-			strCurl = "curl@@-u@@ss0ZrBwLtuhrCosPdXaRczYRzfBWU6Nu:@@-d@@type=note@@-d@@title=\"" 
-		}
-	}
-	strCurl = strCurl + msgTitle + "\"@@-d@@body=\"" + msgBody + "\"@@-X@@POST@@https://api.pushbullet.com/api/pushes"
-	logInfo("spike.rules", strCurl)
-	executeCommandLine(strCurl)
-	return 0	
-]
-
-
-val org.eclipse.xtext.xbase.lib.Functions$Function3 sendPushBullet = [
-		String receiver,
-    	String msgTitle,
-		String msgBody |
-
-	var String strCurl
-
-	switch(receiver)
-	{
-		case "nora":
-		{
-//			strCurl = "curl@@-u@@ampF4JfMvVpoYkSrifrtBAbxQdFMIvCi:@@-d@@type=note@@-d@@title=\""	
-			strCurl = "curl@@-u@@ampF4JfMvVpoYkSrifrtBAbxQdFMIvCi:@@-d@@type=note@@-d@@title=\""	
-		}
-		case "jochen":
-		{
-//			strCurl = "curl@@-u@@RKsuflYMm5SFo625ah6oAVaGfqjkdbWs:@@-d@@type=note@@-d@@title=\""	
-			strCurl = "curl@@-u@@ss0ZrBwLtuhrCosPdXaRczYRzfBWU6Nu:@@-d@@type=note@@-d@@title=\"" 
-		}
-	}
-	strCurl = strCurl + msgTitle + "\"@@-d@@body=\"" + msgBody + "\"@@-X@@POST@@https://api.pushbullet.com/api/pushes"
-	logInfo("spike.rules", strCurl)
-	executeCommandLine(strCurl)
-	return 0	
-]
-
-
-
-
 rule "Initialize all items"
 when
     System started
 then
-	hueGroups.put("living", newArrayList("hue-living.fritz.box", "b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA", "1"))
-	
-	hueGroupData.put("name", "Living Room")
-	hueGroupData.put("base", "hue-living.fritz.box")
-	hueGroupData.put("uID", "b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA")
-	hueGroupData.put("group", "1")
-	hueGroupsMap.put("living", new HashMap(hueGroupData))	
-
-	logInfo("System started","size: "+ hueGroupsMap.size()+ "  key: " + hueGroupsMap.get("living").get("name"))	
-
-
-	hueGroupData.clear()
-	hueGroupData.put("name", "Kitchen")
-	hueGroupData.put("base", "hue-utility.fritz.box")
-	hueGroupData.put("uID", hueUtilUname)
-	hueGroupData.put("group", "2")
-	hueGroupsMap.put("kitchen", new HashMap(hueGroupData))	
-	
-	logInfo("System started","size: "+ hueGroupsMap.size()+ "  key: " + hueGroupsMap.get("living").get("name"))	
-
-
-	hueGroupData.clear()
-	hueGroupData.put("name", "Bath")
-	hueGroupData.put("base", "hue-utility.fritz.box")
-	hueGroupData.put("uID", hueUtilUname)
-	hueGroupData.put("group", "4")
-	hueGroupsMap.put("bath", new HashMap(hueGroupData))	
-	
-	logInfo("System started","size: "+ hueGroupsMap.size()+ "  key: " + hueGroupsMap.get("living").get("name"))	
-
-
-
-	hueGroupData.clear()
-	hueGroupData.put("name", "Floor")
-	hueGroupData.put("base", "hue-utility.fritz.box")
-	hueGroupData.put("uID", hueUtilUname)
-	hueGroupData.put("group", "5")
-	hueGroupsMap.put("floor", new HashMap(hueGroupData))	
-	
-	logInfo("System started","size: "+ hueGroupsMap.size()+ "  key: " + hueGroupsMap.get("living").get("name"))	
-
-
-	hueGroupData.clear()
-	hueGroupData.put("name", "Sleeping Room")
-	hueGroupData.put("base", "hue-utility.fritz.box")
-	hueGroupData.put("uID", hueUtilUname)
-	hueGroupData.put("group", "1")
-	hueGroupsMap.put("sleep", new HashMap(hueGroupData))	
-	
-	logInfo("System started","size: "+ hueGroupsMap.size()+ "  key: " + hueGroupsMap.get("living").get("name"))	
-
-
 
 end
-
 
 
 
@@ -454,73 +322,6 @@ end
 
 
 
-rule "Switch All Lights ON"
-    when
-            Item hueMainToggle changed to ON
-    then
-            
-//	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"on" : true }' )
-
-	var String output 
-	var String key
-	
-	var ArrayList<String> hueSet = new ArrayList(hueGroupsMap.keySet())
-		
-	
-	for (var i = 0; i < hueSet.size(); i++) {
-		key = hueSet.get(i)
-		output = sendHttpPutRequest("http://" + 
-						hueGroupsMap.get(key).get("base") +
-						"/api/" +
-						hueGroupsMap.get(key).get("uID") +
-						"/groups/" +
-						hueGroupsMap.get(key).get("group") +
-						"/action", "application/json", '{"on" : true }' )
-	//    logInfo("HVAC","HVAC Command sent - output: "+ '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
-//		hueLivMainColor.postUpdate(hueLivMainColor.state)
-	    logInfo("Switch Light ON","Switch Light ON Command sent - output: "+output)
-	}
-end
-
-
-rule "Switch All Lights OFF"
-    when
-            Item hueMainToggle changed to OFF
-    then
-            
-//	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"on" : true }' )
-
-	var ArrayList<String> hueSet = new ArrayList(hueGroupsMap.keySet())
-	
-	var String output 
-	var String key
-	
-	for (var i = 0; i < hueSet.size(); i++) {
-		key = hueSet.get(i)
-		output = sendHttpPutRequest("http://" + 
-						hueGroupsMap.get(key).get("base") +
-						"/api/" +
-						hueGroupsMap.get(key).get("uID") +
-						"/groups/" +
-						hueGroupsMap.get(key).get("group") +
-						"/action", "application/json", '{"on" : false }' )
-	//    logInfo("HVAC","HVAC Command sent - output: "+ '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
-//		hueLivMainColor.postUpdate(hueLivMainColor.state)
-	    logInfo("Switch Light OFF","Switch Light OFF Command sent - output: "+output)
-	}
-end
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 rule "Switch Group Light OFF"
@@ -533,8 +334,8 @@ rule "Switch Group Light OFF"
 
 	hueLivMainColor.postUpdate(hueLivMainColor.state)
     logInfo("Switch Light OFF","Switch Light OFF Command sent - output: "+output)
-end
 
+end
 
 
 rule "Switch Light ON"

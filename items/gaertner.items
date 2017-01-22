@@ -46,6 +46,30 @@ Dimmer  hueLivMainDimmer
 Color	hueLivMainColor
 Dimmer	hueLivMainColorTemp
 
+Switch	hueKitMainToggle
+Dimmer  hueKitMainDimmer
+Color	hueKitMainColor
+Dimmer	hueKitMainColorTemp
+
+Switch	hueFloMainToggle
+Dimmer  hueFloMainDimmer
+Color	hueFloMainColor
+Dimmer	hueFloMainColorTemp
+
+Switch	hueSleMainToggle
+Dimmer  hueSleMainDimmer
+Color	hueSleMainColor
+Dimmer	hueSleMainColorTemp
+
+Switch	hueBatMainToggle
+Dimmer  hueBatMainDimmer
+Color	hueBatMainColor
+Dimmer	hueBatMainColorTemp
+
+Switch	hueMainToggle
+
+
+
 
 /* 
 // Hues
@@ -148,12 +172,18 @@ Number heatLivWValveState "heatLivWValveState" { channel = "homematic:HM-CC-RT-D
 // Window/ Door Contacts
 
 Contact contKitDoorAtrium "contKitDoorAtrium" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1469830:1#STATE"}
+Contact contKitBalcony "contKitBalcony" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:MEQ0174917:1#STATE"}
 
 Contact contLivDoorW "contLivDoorW" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1470385:1#STATE"}
 Contact contLivDoorE "contLivDoorE" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1469816:1#STATE"}
 Contact contLivWinRoof "contLivWinRoof" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1470280:1#STATE"}
-Contact contLivEntrance "contLivEntrance" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1468715:1#STATE"}
- 
+Contact contLivEntrance "contLivEntrance" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1470368:1#STATE"}
+
+Contact contBath "contBath" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ0924258:1#STATE"}
+Contact contEscape "contEscape" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:MEQ0174904:1#STATE"}
+Contact contGuest "contGuest" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1469812:1#STATE"}
+Contact contRest "contRest" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1470004:1#STATE"}
+Contact contSleep "contSleep" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1469074:1#STATE"}
 
  
  
